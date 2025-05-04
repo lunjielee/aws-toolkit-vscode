@@ -117,10 +117,10 @@ jobs:
                   REPO_NAME: ${{ github.repository }}
               run: node "$GITHUB_WORKSPACE/.github/workflows/filterDuplicates.js" run diff_output.txt jscpd-report.json $COMMIT_HASH $REPO_NAME
 
-    macos:
+    linux:
         needs: lint-commits
-        name: test macOS
-        runs-on: macos-latest
+        name: test Linux
+        runs-on: ubuntu-latest
         strategy:
             fail-fast: false
             matrix:
@@ -150,7 +150,7 @@ jobs:
               if: ${{ github.repository == 'aws/aws-toolkit-vscode' && github.event_name == 'pull_request' && github.base_ref == 'master' }}
               uses: codecov/codecov-action@v5
               with:
-                  flags: macos-${{ matrix.package }}-unittests
+                  flags: linux-${{ matrix.package }}-unittests
                   verbose: true
                   file: ./coverage/${{ matrix.package }}/lcov.info
                   token: ${{ secrets.CODECOV_TOKEN }}
